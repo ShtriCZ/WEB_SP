@@ -1,0 +1,83 @@
+<html>
+<head>
+    <title></title>
+    <meta name="generator" content="Bluefish 2.2.9" >
+    <meta name="author" content="Student" >
+    <meta name="date" content="2018-05-30T11:22:42+0100" >
+    <meta name="copyright" content="">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
+    <meta http-equiv="content-style-type" content="text/css">
+    <meta http-equiv="expires" content="0">
+    <link rel="stylesheet" href="styl.css" type="text/css">
+</head>
+<body>
+<div class="prihlasen">
+    <?php
+    session_start();
+    echo 'Jste přihlášen jako: <h10 >'.$_SESSION['jmeno'].'</h10>';
+
+    ?>
+    <br>
+    <a href="odhlaseni.php" style="color: #00d408">Odhlásit se</a><br>
+</div>
+<h1 style="position: fixed; top: -0.5%; left: 1%">WEB KONFERENCE</h1>
+<center>
+    <div class="aaa">
+        <table cellspacing="5" border="0" cellpadding="0">
+            <td></td>
+            <td style=" padding: 5px;"><a href="about.php">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php">KONFERENCE</a></td>
+                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php">SPRÁVA KONFERENCÍ</a></td>
+                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php">UŽIVATELÉ</a></td>
+                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php">ZVEŘEJNIT RECENZI</a></td>
+        </table>
+    </div>
+    <br>
+    <div class="login">
+        <?php
+        $servername="localhost";
+        $username="root";
+        $password="";
+        $dbname="web_sp";
+        $conn=mysqli_connect($servername,$username,$password,$dbname);
+        if ($conn->connect_error) {
+            die("Chyba: " . $conn->connect_error);
+        }
+
+
+        $prikaz = "SELECT * FROM konference";
+        $resul = $conn->query($prikaz);
+        echo "<br><table  cellspacing='10' border='1' style='text-align: center; '>";
+        if ($resul->num_rows > 0) {
+            // output data of each row
+            echo "<tr><td>Název:</td><td>Autor:</td><td>Přidal:</td><td>Originalita:</td><td>Téma</td><td>Technická kvalita:</td>
+                <td>Jazyková kvalita:</td><td>Doporučení:</td><td>Poznámky:</td><td>Stav:</td><td>Přidat recenzenta:</td></tr>";
+            while($data = $resul->fetch_assoc()) {
+                $nazev=$data["nazev"];
+                echo  "<tr><td width='1%'>".$data["nazev"]."</td><td>".$data["autor"]."</td><td>".$data["pridal"]."</td>
+                        <td>".$data["originalita"]."</td><td>".$data["tema"]."</td><td>".$data["technicka_kvalita"]."</td>
+                        <td>".$data["jazykova_kvalita"]."</td><td>".$data["doporuceni"]."</td><td title='".$data["poznamky"]."'>".substr($data["poznamky"],0,10)."...</td><td>".$data["stav"]."</td>";
+
+        $prika = "SELECT * FROM recenzenti";
+        $result = $conn->query($prika);
+        echo "<td><form method='post' action='ulozit_recenzenty.php'><input type='hidden' name='nazev' value='$nazev'>";
+        if ($result->num_rows > 0) {
+            // output data of each row
+            echo " <select name='id'>";
+            while($dat = $result->fetch_assoc()) {
+                echo  "<option value='".$dat["id"]."'>".$dat["jmeno"] ." ". $dat["prijmeni"]."</option>";
+            }}
+        echo "<input type='submit'value='Uložit'></form></td></tr>";
+
+
+
+
+                $q=$data["nazev"];}}
+        echo "</table>";
+        ?>
+    </div>
+</body>
+</html>

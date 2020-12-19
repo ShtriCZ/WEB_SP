@@ -1,0 +1,56 @@
+body{
+    background-color: #232323;
+    font-family: sans-serif;
+     color:#007901;
+}
+
+a{
+    color:#007901;
+    text-decoration: none;
+}
+div.prihlaseni{
+     position: fixed;
+    left:94%;
+    top: 2%;
+}
+div.prihlasen{
+     position: absolute;
+    left:88%;
+    top:2%;
+     background-color: #232323;
+}
+
+div.aaa{	
+	border:3px solid #007901;
+	padding: 0.3em 1.0em 0.3em 2.0em;
+}
+
+div.login{	
+
+	border: 3px solid #007901;
+	padding: 1em 1.0em 1.0em 2.0em;
+    margin: auto;
+    width: 50%;
+    top: 40%;
+}
+
+div.abc{
+	border: 3px solid #007901;
+	padding: 1em 1.0em 1.0em 2.0em;
+   width: 35%;
+   position: absolute;
+   top: 15%;
+   left:30%;
+}
+
+h1{
+	color: #007901;
+	font-size:200%;
+}
+
+div.text{
+	color:black;
+	background-color: white;
+	width: 550px;
+	height: 750px;
+}
