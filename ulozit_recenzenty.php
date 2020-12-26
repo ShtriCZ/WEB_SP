@@ -11,6 +11,8 @@
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
 <meta http-equiv="content-style-type" content="text/css">
 <meta http-equiv="expires" content="0">
+    <title>Uložit recenzenty</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <link rel="stylesheet" href="styl.css" type="text/css">
 </head>
 <body>
@@ -24,16 +26,16 @@
     <a href="odhlaseni.php" style="color: #00d408">Odhlásit se</a><br>
 </div>
 
-<h1 style="position: fixed; top: -0.5%; left: 1%">WEB KONFERENCE</h1>
+<h1 style="position: fixed; top:1%; left: 1%">WEB KONFERENCE</h1>
 <center>
     <div class="aaa">
         <table cellspacing="5" border="0" cellpadding="0">
             <td></td>
-            <td style=" padding: 5px;"><a href="about.php">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php">KONFERENCE</a></td>
-               <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php">SPRÁVA KONFERENCÍ</a></td>
-                <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php">UŽIVATELÉ</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php">ZVEŘEJNIT RECENZI</a></td>
+            <td style=" padding: 5px;"><a href="about.php" class="text-success">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
+               <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php" class="text-success">SPRÁVA KONFERENCÍ</a></td>
+                <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php" class="text-success">UŽIVATELÉ</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php" class="text-success">ZVEŘEJNIT RECENZI</a></td>
         </table>
     </div>
 
@@ -43,6 +45,16 @@
 include_once("connect.php"); 
 $id=htmlspecialchars($_POST['id']);
 $nazev=htmlspecialchars($_POST['nazev']);
+$servername="localhost";
+$username="root";
+$password="";
+$dbname="WEB_SP";
+$conn = new mysqli($servername, $username, $password, $dbname);
+$conn->query('set character_set_client=utf8');
+$conn->query('set character_set_connection=utf8');
+$conn->query('set character_set_results=utf8');
+$conn->query('set character_set_server=utf8');
+
 if(isset($id)){
 if ($conn->connect_error) {
     die("Chyba: " . $conn->connect_error);

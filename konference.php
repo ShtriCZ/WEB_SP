@@ -11,6 +11,8 @@
     <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
     <meta http-equiv="content-style-type" content="text/css">
     <meta http-equiv="expires" content="0">
+    <title>Konference</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="styl.css" type="text/css">
 </head>
 <body>
@@ -24,23 +26,23 @@ if(isset($_SESSION['jmeno'])){
 </div>';}
 else{
     echo '<div class="prihlaseni">
-    <a href="prihlaseni.php">Přihlásit se</a><br>
+    <a href="prihlaseni.php" style="text-decoration: none;color:#007901;">Přihlásit se</a><br>
 </div>';
 }
 ?>
-<h1 style="position: fixed; top: -0.5%; left: 1%">WEB KONFERENCE</h1>
+<h1 style="position: fixed; top:1%; left: 1%">WEB KONFERENCE</h1>
 <center>
     <div class="aaa">
         <table cellspacing="5" border="0" cellpadding="0">
             <td></td>
-            <td style=" padding: 5px;"><a href="about.php">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php">KONFERENCE</a></td>
+            <td style=" padding: 5px;"><a href="about.php" class="text-success">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
             <?php
             if(isset($_SESSION['jmeno'])){
                 if($_SESSION['jmeno']=="admin"){
-                    echo('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php">SPRÁVA KONFERENCÍ</a></td>');
-                    echo('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php">UŽIVATELÉ</a></td>');
-                    echo ('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php">ZVEŘEJNIT RECENZI</a></td>');
+                    echo('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php" class="text-success">SPRÁVA KONFERENCÍ</a></td>');
+                    echo('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php" class="text-success">UŽIVATELÉ</a></td>');
+                    echo ('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php" class="text-success">ZVEŘEJNIT RECENZI</a></td>');
                 }}
             ?>
         </table>
@@ -58,8 +60,16 @@ else{
         }
 
 
-        $prikaz = "SELECT nazev FROM konference WHERE stav='schvaleno'";
-        $resul = $conn->query($prikaz);
+        $db_connection = new PDO('mysql:host=localhost;dbname=WEB_SP', 'root', '');
+        $sql = "SELECT nazev FROM konference WHERE stav='schvaleno'";
+        $query = $db_connection->prepare($sql);
+        $query->bindParam(':id', $id);
+        $query->execute();
+        //getting the result
+        $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $query->fetchColumn();
+        print(htmlentities($result));
+       /** $resul = $conn->query($prikaz);
 
         echo "<form method='POST' action='vypsat_konferenci.php'>";
         if ($resul->num_rows > 0) {
@@ -68,7 +78,12 @@ else{
         echo  '<input type="submit" name="nazev" style="width:500px" value="'.$data["nazev"].'" ><br><br>' ;
 
    }}
-        echo "</form>"; ?>
+        echo "</form>"; */
+        ?>
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+        $("tr:odd").addClass("barva").css("background-color","#151515");
+    </script>
 </body>
 </html>

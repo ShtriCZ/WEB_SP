@@ -11,6 +11,8 @@
     <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
     <meta http-equiv="content-style-type" content="text/css">
     <meta http-equiv="expires" content="0">
+    <title>Zveřejnit konferenci</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="styl.css" type="text/css">
 </head>
 <body>
@@ -28,19 +30,19 @@ else{
 </div>';
 }
 ?>
-<h1 style="position: fixed; top: -0.5%; left: 1%">WEB KONFERENCE</h1>
+<h1 style="position: fixed; top:1%; left: 1%">WEB KONFERENCE</h1>
 <center>
     <div class="aaa">
         <table cellspacing="5" border="0" cellpadding="0">
             <td></td>
-            <td style=" padding: 5px;"><a href="about.php">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php">KONFERENCE</a></td>
+            <td style=" padding: 5px;"><a href="about.php" class="text-success">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
             <?php
             if(isset($_SESSION['jmeno'])){
                 if($_SESSION['jmeno']=="admin"){
-                    echo('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php">SPRÁVA KONFERENCÍ</a></td>');
-                    echo('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php">UŽIVATELÉ</a></td>');
-                    echo ('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php">ZVEŘEJNIT RECENZI</a></td>');
+                    echo('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php" class="text-success">SPRÁVA KONFERENCÍ</a></td>');
+                    echo('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php" class="text-success">UŽIVATELÉ</a></td>');
+                    echo ('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php" class="text-success">ZVEŘEJNIT RECENZI</a></td>');
                 }}
             ?>
         </table>
@@ -65,13 +67,17 @@ else{
         if ($resul->num_rows > 0) {
             // output data of each row
             while($data = $resul->fetch_assoc()) {
-                echo  "<tr><td width='1%'>".$data["nazev"]."</td><td width='1%'><form method='post' action='schvalit.php'><button type='submit' name='nazev' value='".$data["nazev"]."' >Schválit</button></form>  </td>
-                        <td width='1%'><form action='neschvalit.php' method='post'><button type='submit' name='nazev' value='".$data["nazev"]."' >Neschválit</button></form> </td></tr>";
+                echo  "<tr><td width='1%'>".$data["nazev"]."</td><td width='1%'><form method='post' action='schvalit.php'><button type='submit' class='btn btn-success' name='nazev' value='".$data["nazev"]."' >Schválit</button></form>  </td>
+                        <td width='1%'><form action='neschvalit.php' method='post'><button type='submit' name='nazev' class='btn btn-danger' value='".$data["nazev"]."' >Neschválit</button></form> </td></tr>";
 
                 $q=$data["nazev"];}}
         echo "</table>";
         ?>
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+        $("tr:odd").addClass("barva").css("background-color","#151515");
+    </script>
 
 
 </body>

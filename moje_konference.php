@@ -11,6 +11,8 @@
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
 <meta http-equiv="content-style-type" content="text/css">
 <meta http-equiv="expires" content="0">
+    <title>Moje konference</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <link rel="stylesheet" href="styl.css" type="text/css">
 </head>
 <body>
@@ -23,14 +25,14 @@
     <br>
     <a href="odhlaseni.php" style="color: #00d408">Odhlásit se</a><br>
 </div>
-<h1 style="position: absolute; top: -0.5%; left: 1%">WEB KONFERENCE</h1>
+<h1 style="position: fixed; top:1%; left: 1%" >WEB KONFERENCE</h1>
 <center>
     <div class="aaa">
         <table cellspacing="5" border="0" cellpadding="0">
-            <td style=" padding: 5px;"><a href="autori_menu.php">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_autori.php">KONFERENCE</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="moje_konference.php">MOJE KONFERENCE</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="pridat_konferenci.php">PŘIDAT KONFERENCI</a></td>
+            <td style=" padding: 5px;"><a href="autori_menu.php" class="text-success">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_autori.php" class="text-success">KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="moje_konference.php" class="text-success">MOJE KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="pridat_konferenci.php" class="text-success">PŘIDAT KONFERENCI</a></td>
         </table>
     </div>
     <br>
@@ -49,16 +51,27 @@
         $jmeno = $_SESSION['jmeno'];
         $prikaz = "SELECT * FROM konference WHERE pridal='$jmeno'";
         $resul = $conn->query($prikaz);
-        echo "<br><table  cellspacing='5' border='2'>";
+        echo "<br><table  cellspacing='5' border='2' style='text-align: center'>";
         if ($resul->num_rows > 0) {
             // output data of each row
             echo("<tr><td>Název:</td><td>Originalita:</td><td>Téma:</td><td>Technická kvalita:</td><td>Jazyková kvalita:</td><td>Stav:</td>");
             while($data = $resul->fetch_assoc()) {
                 echo  "<tr><td width='1%'>".$data["nazev"]."</td><td width='1%'>".$data["originalita"]."</td><td width='1%'>".$data["tema"]."</td>
-                <td width='1%'>".$data["technicka_kvalita"]."</td><td width='1%'>".$data["jazykova_kvalita"]."</td><td width='1%'>".$data["stav"]."</td></tr>";
+                <td width='1%'>".$data["technicka_kvalita"]."</td><td width='1%'>".$data["jazykova_kvalita"]."</td><td width='1%'>".$data["stav"]."</td>";
+                echo "<form method='POST' action='delete.php'>";
+
+                if($data["stav"]!='schvaleno'){
+                   echo "<td width='1%'><input type='hidden' name='id' value='". $data["id"] . "'> <button type='submit' class='btn btn-danger'>Odstranit
+        </button></td>";
+                }
+                echo"</form></tr>";
             }}
         echo "</table>";
         ?>
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+        $("tr:odd").addClass("barva").css("background-color","#151515");
+    </script>
 </body>
 </html>

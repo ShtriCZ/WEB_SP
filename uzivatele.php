@@ -11,6 +11,8 @@
     <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
     <meta http-equiv="content-style-type" content="text/css">
     <meta http-equiv="expires" content="0">
+    <title>Uživatelé</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="styl.css" type="text/css">
 </head>
 <body>
@@ -23,16 +25,16 @@
     <br>
     <a href="odhlaseni.php" style="color: #00d408">Odhlásit se</a><br>
 </div>
-<h1 style="position: absolute; top: -0.5%; left: 1%">WEB KONFERENCE</h1>
+<h1 style="position: fixed; top:1%; left: 1%">WEB KONFERENCE</h1>
 <center>
     <div class="aaa">
         <table cellspacing="5" border="0" cellpadding="0">
             <td></td>
-            <td style=" padding: 5px;"><a href="about.php">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php">KONFERENCE</a></td>
-                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php">SPRÁVA KONFERENCÍ</a></td>
-                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php">UŽIVATELÉ</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php">ZVEŘEJNIT RECENZI</a></td>
+            <td style=" padding: 5px;"><a href="about.php" class="text-success">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
+                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php" class="text-success">SPRÁVA KONFERENCÍ</a></td>
+                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php" class="text-success">UŽIVATELÉ</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php" class="text-success">ZVEŘEJNIT RECENZI</a></td>
         </table>
     </div>
     <br>
@@ -48,7 +50,7 @@
         if ($conn->connect_error) {
             die("Chyba: " . $conn->connect_error);
         }
-        echo("Autoři:");
+        echo("<button id='autor' class='btn btn-light'>Autoři</button><p id='autori'>");
         $prikaz = "SELECT * FROM autori";
         $resul = $conn->query($prikaz);
         echo "<br><table  cellspacing='5' border='2'>";
@@ -59,9 +61,9 @@
                 echo  "<tr><td width='1%'>".$data["jmeno"]."</td><td width='1%'>".$data["prijmeni"]."</td><td width='1%'>".$data["email"]."</td>
                 <td width='1%'>".$data["uzjmeno"]."</td><td width='1%'>".$data["heslo"]."</td></tr>";
                 }}
-        echo "</table>";
+        echo "</table></p>";
 
-        echo("<br>Recenzenti:");
+        echo("<br><br><button id='recenzent' class='btn btn-light'>Recenzenti</button><p id='recenzenti'>");
         $prikaz = "SELECT * FROM recenzenti";
         $resul = $conn->query($prikaz);
         echo "<br><table  cellspacing='10' border='1'>";
@@ -72,8 +74,27 @@
                 echo  "<tr><td width='1%'>".$data["jmeno"]."</td><td width='1%'>".$data["prijmeni"]."</td><td width='1%'>".$data["email"]."</td>
                 <td width='1%'>".$data["uzjmeno"]."</td><td width='1%'>".($data["heslo"])."</td></tr>";
                 }}
-        echo "</table>";
+        echo "</table></p>";
         ?>
        </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+        $("tr:odd").addClass("barva").css("background-color","#151515");
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#recenzent").click(function(){
+                $("#recenzenti").toggle();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#autor").click(function(){
+                $("#autori").toggle();
+            });
+        });
+    </script>
 </body>
 </html>
