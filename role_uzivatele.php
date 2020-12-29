@@ -54,23 +54,23 @@ else{
         if ($conn->connect_error) {
             die("Chyba: " . $conn->connect_error);
         }
-
+        //Výběr všech dat z autorů
         $prikaz = "SELECT * FROM autori";
         $resul = $conn->query($prikaz);
         echo "<table  cellspacing='5' border='2'>";
         if ($resul->num_rows > 0) {
-            // output data of each row
+            //Výpis dat z autorů a možnost je odstranit nebo změnit jejich roli na recenzenta
             echo "<form method='post' action='zmenit_roli.php'>Autoři:<br><select name='uzjmeno'>";
             while($data = $resul->fetch_assoc()) {
                 echo "<option value='".$data["uzjmeno"]."'>".$data["uzjmeno"]."</option>";
                 }
             echo "</select><br><br><input type='submit' value='Změnit roli autora' name='role'><br><input type='submit' value='Odstranit autora' name='odstranit'></form>";
         }
-
+        //Výběr všech dat z recenzentů
         $prikaz = "SELECT * FROM recenzenti";
         $resul = $conn->query($prikaz);
         if ($resul->num_rows > 0) {
-            // output data of each row
+            //Výpis dat z recenzentů a možnost je odstranit nebo změnit jejich roli na autora
             echo "<br><br><form method='post' action='zmenit_roli.php'>Recenzenti:<br><select name='uzjmeno'>";
             while($data = $resul->fetch_assoc()) {
                 echo "<option value='" . $data["uzjmeno"] . "'>" . $data["uzjmeno"] . "</option>";
