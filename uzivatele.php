@@ -89,7 +89,7 @@ else{
         echo "</table></p>";
         ?>
        </div>
-    <!--Skript pro obarvení lichých řádků
+    <!--Skript pro obarvení lichých řádků-->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script>
         $("tr:odd").addClass("barva").css("background-color","#151515");
