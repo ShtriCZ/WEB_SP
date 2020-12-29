@@ -26,7 +26,7 @@
    <div class="login">
        <h2>Vytvořit účet:</h2>
        <table cellpadding="5px">
-           <!--Formulář pro vytvoření nového uživatele
+           <!--Formulář pro vytvoření nového uživatele-->
        <form method="POST" action="ulozit_uzivatele.php">
            <tr><td>Jméno: </td><td><input type="text" name="jmeno" ></td></tr>
            <tr><td> Příjmení: </td><td><input type="text" name="prijmeni"></td></tr>
