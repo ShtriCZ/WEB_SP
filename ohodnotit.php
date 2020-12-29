@@ -41,7 +41,8 @@ else{
 
        <h2>Recenze:</h2>
        <table cellpadding="5px">
-       <form method="POST" action="ulozit_recenzi.php">
+           <!--Formulář pro odeslání recenze-->
+            <form method="POST" action="ulozit_recenzi.php">
            <tr><td>Konference: </td><td><select name="konference">
                        <?php
                        //Udáje od databáze, do které se chceme připojit
@@ -59,18 +60,17 @@ else{
                            die("Chyba: " . $conn->connect_error);
                        }
                        $jmeno = $_SESSION['jmeno'];
+                        //Vybrání všech dat z databáze konference
                        $prikaz = "SELECT * FROM konference";
                        $resul = $conn->query($prikaz);
                        if ($resul->num_rows > 0) {
-                       // output data of each row
+                       //Vybere id z recenzentů podle uživatelského jména přihlášeného uživatele
                        $prika = "SELECT id FROM recenzenti WHERE uzjmeno='$jmeno'";
                        $result = $conn->query($prika);
                        if ($result->num_rows > 0) {
-                           // output data of each row
-
                            while($dat = $result->fetch_assoc()) {
                                $id=$dat["id"];
-
+                        //Vypíše všechny recenze, které má k recenzi přihlášený uživatel
                        while($data = $resul->fetch_assoc()) {
                        $jmena = explode(",",$data["recenzent"]);
                        for($i =0;$i<count($jmena);$i++){
@@ -80,6 +80,7 @@ else{
                        }}} } }
                        ?>
                </td></tr>
+                <!--Možnosti pro recenzi-->
            <tr><td>Originalita: </td><td><select name="originalita">
                        <option value="1">1 - velmi neoriginální</option>
                        <option value="2">2 - lehce originální</option>
