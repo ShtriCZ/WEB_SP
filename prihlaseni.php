@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="styl.css" type="text/css">
 </head>
 <body>
+    <!--Odkaz pro přihlášení-->
 <div class="prihlaseni">
     <a href="prihlaseni.php" style="text-decoration: none;color:#007901;">Přihlásit se</a><br>
     </div>
@@ -26,6 +27,7 @@
 </center>
     <div class="abc">
         <table cellpadding="5px">
+            <!--Formulář pro přihlášení-->
             <form method="POST" action="login.php">
                 <tr><td>Uživatelské jméno:</td> <td><input type="text" name="jmeno" placeholder="Uživatelské jméno"></td></tr>
                 <tr><td>Heslo: </td><td><input type="password" name="heslo" placeholder="Heslo"></td></tr>
@@ -33,7 +35,7 @@
 
             </form>
        </table>
-
+        //Odkaz pokud chce uživatel vytvořit nový účet-->
         <a href="pridat_uzivatele.php" style="color: #00d408">Vytvořit účet.</a>
     </div>
 </body>
