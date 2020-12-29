@@ -39,6 +39,7 @@ else{
 <div class="login">
 <?php
 include_once("connect.php");
+    //Načtení dat
 $nazev=htmlspecialchars($_POST['nazev']);
 $autor=htmlspecialchars($_POST['autor']);
 $text=($_POST['text']);
@@ -60,6 +61,7 @@ $conn->query('set character_set_client=utf8');
 $conn->query('set character_set_connection=utf8');
 $conn->query('set character_set_results=utf8');
 $conn->query('set character_set_server=utf8');
+    //Uložení dat do databáze
 $sql = "INSERT INTO `konference` (nazev, autor, text, pdf, pridal, stav)
 VALUES ('$nazev', '$autor', '$text', '$pdf', '$pridal', '$stav')";
 
