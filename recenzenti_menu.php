@@ -36,6 +36,7 @@ else{
         </table>
     </div>
     <br>
+    <!--Úvodní informace o stránkách-->
     <div class="login">
         Vítejte na stránkách konference.<br><br>
         V záložce konference si můžete prohlédnout veškeré přidané konference. Po přihlášení jako uživatel můžete přidávat nové konference.
