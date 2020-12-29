@@ -3,14 +3,24 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
 <meta http-equiv="content-style-type" content="text/css">
-    <title>Uložit uživatele</title>
+    <title>Uložit recenzi</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <link rel="stylesheet" href="styl.css" type="text/css">
 </head>
 <body>
-<div class="prihlaseni">
-    <p class="text-success"><a href="prihlaseni.php" style="text-decoration: none;color:#007901;">Přihlásit se</a></p> <br>
-</div>
+<!--Výpis uživatelského jména přihlášeného uživatele-->
+<?php
+session_start();
+if(isset($_SESSION['jmeno'])){
+    echo '
+<div class="prihlasen">Jste přihlášen jako: <h10 >'.$_SESSION['jmeno'].'</h10>';
+    echo '<br><a href="odhlaseni.php" style="color: #00d408">Odhlásit se</a><br>
+
+</div>';}
+else{
+    header('Location: index.php');
+}
+?>
 
 <!--Nadpis stránky s odkazem na úvodní stránku-->
 <a href="index.php"><h1 style="position: fixed; top:1%; left: 1%">WEB KONFERENCE</h1></a>
@@ -18,21 +28,24 @@
 <center>
     <div class="aaa">
         <table cellspacing="5" border="0" cellpadding="0">
-            <td></td>
-            <td style=" padding: 5px;"><a href="about.php" class="text-success">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
+            <td style=" padding: 5px;"><a href="recenzenti_menu.php" class="text-success">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_recenzenti.php" class="text-success">KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_k_recenzi.php" class="text-success">KONFERENCE K RECENZI</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="ohodnotit.php" class="text-success">OHODNOTIT KONFERENCI</a></td>
         </table>
     </div>
 </center>
     <br>
 <div class="login">
 <?php
-include_once("connect.php"); 
-$jmeno=htmlspecialchars($_POST['jmeno']);
-$prijmeni=htmlspecialchars($_POST['prijmeni']);
-$email=htmlspecialchars($_POST['email']);
-$uzjmeno=htmlspecialchars($_POST['uzjmeno']);
-$heslo=md5($_POST['heslo']);
+include_once("connect.php");
+$konference=htmlspecialchars($_POST['konference']);
+$originalita=htmlspecialchars($_POST['originalita']);
+$tema=htmlspecialchars($_POST['tema']);
+$technicka_kvalita=htmlspecialchars($_POST['technicka_kvalita']);
+$jazykova_kvalita=htmlspecialchars($_POST['jazykova_kvalita']);
+$doporuceni=htmlspecialchars($_POST['doporuceni']);
+$poznamky=htmlspecialchars($_POST['poznamky']);
 
 //Udáje od databáze, do které se chceme připojit
 $servername="localhost";
@@ -49,14 +62,15 @@ $conn->query('set character_set_server=utf8');
 if ($conn->connect_error) {
     die("Chyba: " . $conn->connect_error);
 }
-$sql = "INSERT INTO `autori` (jmeno, prijmeni, email, uzjmeno, heslo)
-VALUES ('$jmeno', '$prijmeni', '$email', '$uzjmeno', '$heslo')";
+$sql = "UPDATE `konference` SET originalita = '$originalita', tema='$tema', technicka_kvalita='$technicka_kvalita', 
+        jazykova_kvalita='$jazykova_kvalita', doporuceni='$doporuceni', poznamky='$poznamky', stav='ohodnoceno' WHERE nazev='$konference'";
 if ($conn->query($sql) === TRUE) {
-    echo "Uživatel uložen.";
+    echo "Vytvořen nový záznam:";
 } else {
     echo "Chyba: " . $sql . "<br>" . $conn->error;
 
 $conn->close();}
+
 ?>
 </div>
     </body>
