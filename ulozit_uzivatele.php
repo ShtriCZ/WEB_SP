@@ -28,6 +28,7 @@
 <div class="login">
 <?php
 include_once("connect.php"); 
+//Načtení dat
 $jmeno=htmlspecialchars($_POST['jmeno']);
 $prijmeni=htmlspecialchars($_POST['prijmeni']);
 $email=htmlspecialchars($_POST['email']);
@@ -45,10 +46,11 @@ $conn->query('set character_set_client=utf8');
 $conn->query('set character_set_connection=utf8');
 $conn->query('set character_set_results=utf8');
 $conn->query('set character_set_server=utf8');
-
+//Chyba pokud není spojení s databází
 if ($conn->connect_error) {
     die("Chyba: " . $conn->connect_error);
 }
+//Vložení dat do databáze
 $sql = "INSERT INTO `autori` (jmeno, prijmeni, email, uzjmeno, heslo)
 VALUES ('$jmeno', '$prijmeni', '$email', '$uzjmeno', '$heslo')";
 if ($conn->query($sql) === TRUE) {
