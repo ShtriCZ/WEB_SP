@@ -32,6 +32,7 @@ else{
     <div class="aaa">
         <table cellspacing="5" border="0" cellpadding="0">
             <?php
+            //Odkazy v hlaním menu se mění podle přihlášeného uživatele, pokud je nějaký přihlášený
             if(isset($_SESSION['jmeno'])){
                 $jmeno=$_SESSION['jmeno'];
                 if($_SESSION['jmeno']=="admin"){
@@ -56,12 +57,12 @@ else{
                 if ($conn->connect_error) {
                     die("Chyba: " . $conn->connect_error);
                 }
-
+                //Výběr dat z databáze autorů podle jména
                 $prikaz = "SELECT * FROM autori WHERE uzjmeno='$jmeno'";
                 $resul = $conn->query($prikaz);
 
                 if ($resul->num_rows > 0) {
-                    // output data of each row
+                    //Ukáže dané odkazy
                     while ($data = $resul->fetch_assoc()) {
                         echo ' <td style=" padding: 5px;"><a href="autori_menu.php" class="text-success">O STRÁNKÁCH</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_autori.php" class="text-success">KONFERENCE</a></td>
@@ -69,11 +70,12 @@ else{
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="pridat_konferenci.php" class="text-success">PŘIDAT KONFERENCI</a></td>';
                     }
                 }
+                //Výběr dat z recenzentů
                 $prikaz = "SELECT * FROM recenzenti WHERE uzjmeno='$jmeno'";
                 $resul = $conn->query($prikaz);
 
                 if ($resul->num_rows > 0) {
-                    // output data of each row
+                    //Ukáže dané odkazy
                     while ($data = $resul->fetch_assoc()) {
                         echo ' <td style=" padding: 5px;"><a href="recenzenti_menu.php" class="text-success">O STRÁNKÁCH</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_recenzenti.php" class="text-success">KONFERENCE</a></td>
@@ -83,6 +85,7 @@ else{
                 }
 
             }
+            //Pokud není uživatel přihlášen
             else{
                 echo('<td style=" padding: 5px;"><a href="about.php" class="text-success">O STRÁNKÁCH</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>');
@@ -94,11 +97,13 @@ else{
     <br>
     <div class="login">
         <?php
+        //Údaje o databázi
         $servername="localhost";
         $username="root";
         $password="";
         $dbname="web_sp";
         $conn=mysqli_connect($servername,$username,$password,$dbname);
+        //Aby byla data vypsaná i v češtině
         $conn->query('set character_set_client=utf8');
         $conn->query('set character_set_connection=utf8');
         $conn->query('set character_set_results=utf8');
@@ -106,13 +111,15 @@ else{
         if ($conn->connect_error) {
             die("Chyba: " . $conn->connect_error);
         }
+        //Načtení id
         $id=htmlspecialchars($_POST['id']);
 
+        //Výběr dat z konference podle id
         $prikaz = "SELECT * FROM konference WHERE id='$id'";
         $resul = $conn->query($prikaz);
 
         if ($resul->num_rows > 0) {
-            // output data of each row
+            //Výpis dat z konference
             while($data = $resul->fetch_assoc()) {
         echo  "<h2>".$data["nazev"]."</h2><textarea readonly name='text' style='width: 500px; height: 250px; resize: none' class='ckeditor' id='editor'>".$data["text"] ."</textarea>
             <p class='text-success'><a style='text-decoration: none;color:#007901;' href='pdf/".$data["pdf"]."'>".$data["pdf"]."</a></p>";
