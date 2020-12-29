@@ -39,6 +39,7 @@ else{
 <div class="login">
 <?php
 include_once("connect.php");
+//Načtení dat
 $konference=htmlspecialchars($_POST['konference']);
 $originalita=htmlspecialchars($_POST['originalita']);
 $tema=htmlspecialchars($_POST['tema']);
@@ -58,10 +59,11 @@ $conn->query('set character_set_client=utf8');
 $conn->query('set character_set_connection=utf8');
 $conn->query('set character_set_results=utf8');
 $conn->query('set character_set_server=utf8');
-
+//Chyba pokud není spojení s databází
 if ($conn->connect_error) {
     die("Chyba: " . $conn->connect_error);
 }
+//Upravení dat v databázi
 $sql = "UPDATE `konference` SET originalita = '$originalita', tema='$tema', technicka_kvalita='$technicka_kvalita', 
         jazykova_kvalita='$jazykova_kvalita', doporuceni='$doporuceni', poznamky='$poznamky', stav='ohodnoceno' WHERE nazev='$konference'";
 if ($conn->query($sql) === TRUE) {
