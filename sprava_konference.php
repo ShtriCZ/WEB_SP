@@ -53,13 +53,12 @@ else{
         if ($conn->connect_error) {
             die("Chyba: " . $conn->connect_error);
         }
-
-
+        //Výběr dat z konference
         $prikaz = "SELECT * FROM konference";
         $resul = $conn->query($prikaz);
         echo "<br><table  cellspacing='5' border='2' style='text-align: center; '>";
         if ($resul->num_rows > 0) {
-            // output data of each row
+            //Výpis dat z databáze konference
             echo "<tr><td>Název:</td><td>Autor:</td><td>Přidal:</td><td>PDF:</td><td>Originalita:</td><td>Téma</td><td>Technická kvalita:</td>
                 <td>Jazyková kvalita:</td><td>Doporučení:</td><td>Poznámky:</td><td>Stav:</td><td>Přidat recenzenta:</td></tr>";
             while($data = $resul->fetch_assoc()) {
@@ -67,25 +66,22 @@ else{
                 echo  "<tr><td width='1%'>".$data["nazev"]."</td><td>".$data["autor"]."</td><td>".$data["pridal"]."</td><td><a href='pdf/".$data["pdf"]."'>".$data["pdf"]."</a></td>
                         <td>".$data["originalita"]."</td><td>".$data["tema"]."</td><td>".$data["technicka_kvalita"]."</td>
                         <td>".$data["jazykova_kvalita"]."</td><td>".$data["doporuceni"]."</td><td title='".$data["poznamky"]."'>".substr($data["poznamky"],0,10)."...</td><td>".$data["stav"]."</td>";
-
+        //Vybrání dat z konference a možnost přiřadit recenzenty ke konferenci
         $prika = "SELECT * FROM recenzenti";
         $result = $conn->query($prika);
         echo "<td><form method='post' action='ulozit_recenzenty.php'><input type='hidden' name='nazev' value='$nazev'>";
         if ($result->num_rows > 0) {
             // output data of each row
-            echo " <br><select name='id' charset='UTF-8'>";
+            echo " <br><select name='id' >";
             while($dat = $result->fetch_assoc()) {
                 echo  "<option value='".$dat["id"]."'>".$dat["jmeno"] ." ". $dat["prijmeni"]."</option>";
             }}
         echo "<input type='submit'value='Uložit'></form></td></tr>";
-
-
-
-
-                $q=$data["nazev"];}}
+            }}
         echo "</table>";
         ?>
     </div>
+    <!--Skript pro obarvení lichých řádků-->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script>
         $("tr:odd").addClass("barva").css("background-color","#151515");
