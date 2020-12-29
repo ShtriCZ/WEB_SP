@@ -40,6 +40,7 @@ else{
     <div class="login">
         <h2>Vkládání nové konference:</h2>
         <table cellpadding="5px">
+            <!--Formulář pro vytvoření nové konference-->
             <form method="POST" action="ulozit_konferenci.php">
                 <tr><td>Nazev: </td><td><input type="text" name="nazev" ></td></tr>
                 <tr><td> Autoři: </td><td><input type="text" name="autor"></td></tr>
@@ -49,6 +50,7 @@ else{
             </form>
         </table>
     </div>
+    <!--Skript pro CKEditor-->
     <script>
         ClassicEditor
             .create( document.querySelector( '#editor' ) )
