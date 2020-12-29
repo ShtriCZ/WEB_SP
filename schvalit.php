@@ -55,7 +55,7 @@ $nazev=htmlspecialchars($_POST['nazev']);
 if ($conn->connect_error) {
     die("Chyba: " . $conn->connect_error);
 }
-
+//Úprava stavu konference na schváleno
 $sql = "UPDATE `konference` SET stav='schvaleno' WHERE nazev='$nazev'";
 if ($conn->query($sql) === TRUE) {
     echo "Vytvořen nový záznam:";
