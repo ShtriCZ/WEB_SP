@@ -52,19 +52,24 @@ else{
         $conn->query('set character_set_connection=utf8');
         $conn->query('set character_set_results=utf8');
         $conn->query('set character_set_server=utf8');
+        
+        //Načtení dat
         $uzjmeno=htmlspecialchars($_POST['uzjmeno']);
         if(isset($_POST['role'])){
         $role=htmlspecialchars($_POST['role']);
-
+        //Chyba pokud není spojení s databází
         if ($conn->connect_error) {
             die("Chyba: " . $conn->connect_error);
         }
+            
+        //Pokud se má změnit role autora na recenzena
         if($role=="Změnit roli autora"){
+            //Výběr dat z autorů
             $prikaz = "SELECT * FROM autori WHERE uzjmeno='$uzjmeno'";
 
             $resul = $conn->query($prikaz);
             if ($resul->num_rows > 0) {
-                // output data of each row
+                //Vkládáí dat do recenzentů
                 while($data = $resul->fetch_assoc()) {
 
                     $jmeno = $data["jmeno"];
@@ -79,21 +84,22 @@ else{
         } else {
             echo "Chyba: " . $sql . "<br>" . $conn->error;}}
             }
+            //Smazání záznamu z autorů
         $sql = " DELETE FROM `autori` WHERE uzjmeno='$uzjmeno'";
         if ($conn->query($sql) === TRUE) {
             echo "Vytvořen nový záznam:";
         } else {
             echo "Chyba: " . $sql . "<br>" . $conn->error;
-
             $conn->close();}}
 
-
+        //Pokud se má měnit role recenzenta na autora
         else if($role=="Změnit roli recenzenta"){
+            //Výběr dat z recenzentů
             $prikaz = "SELECT * FROM recenzenti WHERE uzjmeno='$uzjmeno'";
             $resul = $conn->query($prikaz);
             echo "<br><table  cellspacing='5' border='2'>";
             if ($resul->num_rows > 0) {
-                // output data of each row
+                //Uložení dat do databáze autorů
                 while($data = $resul->fetch_assoc()) {
 
                     $jmeno = $data["jmeno"];
@@ -108,35 +114,33 @@ else{
                     } else {
                         echo "Chyba: " . $sql . "<br>" . $conn->error;}}
             }
+            
+            //Smazání záznamu z recenzentů
             $sql = " DELETE FROM `recenzenti` WHERE uzjmeno='$uzjmeno'";
             if ($conn->query($sql) === TRUE) {
                 echo "Vytvořen nový záznam:";
             } else {
                 echo "Chyba: " . $sql . "<br>" . $conn->error;
-
                 $conn->close();}}}
 
         if(isset($_POST['odstranit'])){
             $odstranit=htmlspecialchars($_POST['odstranit']);
         if($odstranit=="Odstranit autora"){
-
+        //Pouze smazání záznamu pokud se nemá měnit role ale pouze smazat záznam
         $sql = " DELETE FROM `autori` WHERE uzjmeno='$uzjmeno'";
         if ($conn->query($sql) === TRUE) {
             echo "Vytvořen nový záznam:";
         } else {
             echo "Chyba: " . $sql . "<br>" . $conn->error;
-
             $conn->close();}}
 
-
         else if($odstranit=="Odstranit recenzenta"){
-
+        //Pouze smazání záznamu pokud se nemá měnit role ale pouze smazat záznam
             $sql = " DELETE FROM `recenzenti` WHERE uzjmeno='$uzjmeno'";
             if ($conn->query($sql) === TRUE) {
                 echo "Vytvořen nový záznam:";
             } else {
                 echo "Chyba: " . $sql . "<br>" . $conn->error;
-
                 $conn->close();}}
         }
 
