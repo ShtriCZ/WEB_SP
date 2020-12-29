@@ -35,7 +35,7 @@
 
             </form>
        </table>
-        //Odkaz pokud chce uživatel vytvořit nový účet-->
+        <!--Odkaz pokud chce uživatel vytvořit nový účet-->
         <a href="pridat_uzivatele.php" style="color: #00d408">Vytvořit účet.</a>
     </div>
 </body>
