@@ -54,20 +54,20 @@ else{
             die("Chyba: " . $conn->connect_error);
         }
 
-
+        //Výběr ohodnocených konferencí z databáze
         $prikaz = "SELECT nazev FROM konference WHERE stav LIKE 'ohodnoceno'";
         $resul = $conn->query($prikaz);
         echo "<br><table  cellspacing='10' border='1' style='text-align: center'>";
         if ($resul->num_rows > 0) {
-            // output data of each row
+            //Výpis dat
             while($data = $resul->fetch_assoc()) {
                 echo  "<tr><td width='1%'>".$data["nazev"]."</td><td width='1%'><form method='post' action='schvalit.php'><button type='submit' class='btn btn-success' name='nazev' value='".$data["nazev"]."' >Schválit</button></form>  </td>
                         <td width='1%'><form action='neschvalit.php' method='post'><button type='submit' name='nazev' class='btn btn-danger' value='".$data["nazev"]."' >Neschválit</button></form> </td></tr>";
-
-                $q=$data["nazev"];}}
+}}
         echo "</table>";
         ?>
     </div>
+    <!--Skript pro obarvení lichých řádků-->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script>
         $("tr:odd").addClass("barva").css("background-color","#151515");
