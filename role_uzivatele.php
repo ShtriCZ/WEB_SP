@@ -30,53 +30,53 @@ else{
         <table cellspacing="5" border="0" cellpadding="0">
             <td style=" padding: 5px;"><a href="admin_menu.php" class="text-success">O STRÁNKÁCH</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
-                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php" class="text-success">SPRÁVA KONFERENCÍ</a></td>
-                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php" class="text-success">UŽIVATELÉ</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php" class="text-success">SPRÁVA KONFERENCÍ</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php" class="text-success">UŽIVATELÉ</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php" class="text-success">ZVEŘEJNIT KONFERENCI</a></td>
         </table>
     </div>
 </center>
-    <br>
-    <div class="login">
+<br>
+<div class="login">
 
-        <?php
-        //Udáje od databáze, do které se chceme připojit
-        $servername="localhost";
-        $username="root";
-        $password="";
-        $dbname="web_sp";
-        $conn=mysqli_connect($servername,$username,$password,$dbname);
-        //Zajištění že se budou data načítat i v češtině
-        $conn->query('set character_set_client=utf8');
-        $conn->query('set character_set_connection=utf8');
-        $conn->query('set character_set_results=utf8');
-        $conn->query('set character_set_server=utf8');
-        if ($conn->connect_error) {
-            die("Chyba: " . $conn->connect_error);
+    <?php
+    //Udáje od databáze, do které se chceme připojit
+    $servername="localhost";
+    $username="root";
+    $password="";
+    $dbname="web_sp";
+    $conn=mysqli_connect($servername,$username,$password,$dbname);
+    //Zajištění že se budou data načítat i v češtině
+    $conn->query('set character_set_client=utf8');
+    $conn->query('set character_set_connection=utf8');
+    $conn->query('set character_set_results=utf8');
+    $conn->query('set character_set_server=utf8');
+    if ($conn->connect_error) {
+        die("Chyba: " . $conn->connect_error);
+    }
+    //Výběr všech dat z autorů
+    $prikaz = "SELECT * FROM autori";
+    $resul = $conn->query($prikaz);
+    echo "<table  cellspacing='5' border='2'>";
+    if ($resul->num_rows > 0) {
+        //Výpis dat z autorů a možnost je odstranit nebo změnit jejich roli na recenzenta
+        echo "<form method='post' action='zmenit_roli.php'>Autoři:<br><select name='uzjmeno'>";
+        while($data = $resul->fetch_assoc()) {
+            echo "<option value='".$data["id"]."'>".$data["uzjmeno"]."</option>";
         }
-        //Výběr všech dat z autorů
-        $prikaz = "SELECT * FROM autori";
-        $resul = $conn->query($prikaz);
-        echo "<table  cellspacing='5' border='2'>";
-        if ($resul->num_rows > 0) {
-            //Výpis dat z autorů a možnost je odstranit nebo změnit jejich roli na recenzenta
-            echo "<form method='post' action='zmenit_roli.php'>Autoři:<br><select name='uzjmeno'>";
-            while($data = $resul->fetch_assoc()) {
-                echo "<option value='".$data["uzjmeno"]."'>".$data["uzjmeno"]."</option>";
-                }
-            echo "</select><br><br><input type='submit' value='Změnit roli autora' name='role'><br><input type='submit' value='Odstranit autora' name='odstranit'></form>";
-        }
-        //Výběr všech dat z recenzentů
-        $prikaz = "SELECT * FROM recenzenti";
-        $resul = $conn->query($prikaz);
-        if ($resul->num_rows > 0) {
-            //Výpis dat z recenzentů a možnost je odstranit nebo změnit jejich roli na autora
-            echo "<br><br><form method='post' action='zmenit_roli.php'>Recenzenti:<br><select name='uzjmeno'>";
-            while($data = $resul->fetch_assoc()) {
-                echo "<option value='" . $data["uzjmeno"] . "'>" . $data["uzjmeno"] . "</option>";
-            }}
-        echo "</select><br><br><input type='submit' value='Změnit roli recenzenta' name='role'><br><input type='submit' value='Odstranit recenzenta' name='odstranit'></form>";
-        ?>
-       </div>
+        echo "</select><br><br><input type='submit' value='Změnit roli autora' name='role'><br><input type='submit' value='Odstranit autora' name='odstranit'></form>";
+    }
+    //Výběr všech dat z recenzentů
+    $prikaz = "SELECT * FROM recenzenti";
+    $resul = $conn->query($prikaz);
+    if ($resul->num_rows > 0) {
+        //Výpis dat z recenzentů a možnost je odstranit nebo změnit jejich roli na autora
+        echo "<br><br><form method='post' action='zmenit_roli.php'>Recenzenti:<br><select name='uzjmeno'>";
+        while($data = $resul->fetch_assoc()) {
+            echo "<option value='" . $data["id"] . "'>" . $data["uzjmeno"] . "</option>";
+        }}
+    echo "</select><br><br><input type='submit' value='Změnit roli recenzenta' name='role'><br><input type='submit' value='Odstranit recenzenta' name='odstranit'></form>";
+    ?>
+</div>
 </body>
 </html>
