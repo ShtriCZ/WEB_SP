@@ -65,7 +65,7 @@ else{
                     //Ukáže dané odkazy
                     while ($data = $resul->fetch_assoc()) {
                         echo ' <td style=" padding: 5px;"><a href="autori_menu.php" class="text-success">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_autori.php" class="text-success">KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="moje_konference.php" class="text-success">MOJE KONFERENCE</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="pridat_konferenci.php" class="text-success">PŘIDAT KONFERENCI</a></td>';
                     }
@@ -78,7 +78,7 @@ else{
                     //Ukáže dané odkazy
                     while ($data = $resul->fetch_assoc()) {
                         echo ' <td style=" padding: 5px;"><a href="recenzenti_menu.php" class="text-success">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_recenzenti.php" class="text-success">KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_k_recenzi.php" class="text-success">KONFERENCE K RECENZI</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="ohodnotit.php" class="text-success">OHODNOTIT KONFERENCI</a></td>';
                     }
@@ -94,37 +94,37 @@ else{
         </table>
     </div>
 </center>
-    <br>
-    <div class="login">
-        <?php
-        //Údaje o databázi
-        $servername="localhost";
-        $username="root";
-        $password="";
-        $dbname="web_sp";
-        $conn=mysqli_connect($servername,$username,$password,$dbname);
-        //Aby byla data vypsaná i v češtině
-        $conn->query('set character_set_client=utf8');
-        $conn->query('set character_set_connection=utf8');
-        $conn->query('set character_set_results=utf8');
-        $conn->query('set character_set_server=utf8');
-        if ($conn->connect_error) {
-            die("Chyba: " . $conn->connect_error);
-        }
-        //Načtení id
-        $id=htmlspecialchars($_POST['id']);
+<br>
+<div class="login">
+    <?php
+    //Údaje o databázi
+    $servername="localhost";
+    $username="root";
+    $password="";
+    $dbname="web_sp";
+    $conn=mysqli_connect($servername,$username,$password,$dbname);
+    //Aby byla data vypsaná i v češtině
+    $conn->query('set character_set_client=utf8');
+    $conn->query('set character_set_connection=utf8');
+    $conn->query('set character_set_results=utf8');
+    $conn->query('set character_set_server=utf8');
+    if ($conn->connect_error) {
+        die("Chyba: " . $conn->connect_error);
+    }
+    //Načtení id
+    $id=htmlspecialchars($_POST['id']);
 
-        //Výběr dat z konference podle id
-        $prikaz = "SELECT * FROM konference WHERE id='$id'";
-        $resul = $conn->query($prikaz);
+    //Výběr dat z konference podle id
+    $prikaz = "SELECT * FROM konference WHERE id='$id'";
+    $resul = $conn->query($prikaz);
 
-        if ($resul->num_rows > 0) {
-            //Výpis dat z konference
-            while($data = $resul->fetch_assoc()) {
-        echo  "<h2>".$data["nazev"]."</h2><textarea readonly name='text' style='width: 500px; height: 250px; resize: none' class='ckeditor' id='editor'>".$data["text"] ."</textarea>
-            <p class='text-success'><a style='text-decoration: none;color:#007901;' href='pdf/".$data["pdf"]."'>".$data["pdf"]."</a></p>";
-}}
-        ?>
-    </div>
+    if ($resul->num_rows > 0) {
+        //Výpis dat z konference
+        while($data = $resul->fetch_assoc()) {
+            echo  "<h2>".$data["nazev"]."</h2><textarea readonly name='text' style='width: 500px; height: 250px; resize: none' class='ckeditor' id='editor'>".$data["text"] ."</textarea>
+            <p class='text-success'><a style='text-decoration: none;color:#007901;' href='pdf/".$data["pdf"]."' target='blank'>".$data["pdf"]."</a></p>";
+        }}
+    ?>
+</div>
 </body>
 </html>
