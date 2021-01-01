@@ -1,11 +1,11 @@
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
-<meta http-equiv="content-style-type" content="text/css">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8">
+    <meta http-equiv="content-style-type" content="text/css">
     <title>Uložit uživatele</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<link rel="stylesheet" href="styl.css" type="text/css">
+    <link rel="stylesheet" href="styl.css" type="text/css">
 </head>
 <body>
 <div class="prihlaseni">
@@ -24,42 +24,42 @@
         </table>
     </div>
 </center>
-    <br>
+<br>
 <div class="login">
-<?php
-include_once("connect.php"); 
-//Načtení dat
-$jmeno=htmlspecialchars($_POST['jmeno']);
-$prijmeni=htmlspecialchars($_POST['prijmeni']);
-$email=htmlspecialchars($_POST['email']);
-$uzjmeno=htmlspecialchars($_POST['uzjmeno']);
-$heslo=md5($_POST['heslo']);
+    <?php
+    include_once("connect.php");
+    //Načtení dat
+    $jmeno=htmlspecialchars($_POST['jmeno']);
+    $prijmeni=htmlspecialchars($_POST['prijmeni']);
+    $email=htmlspecialchars($_POST['email']);
+    $uzjmeno=htmlspecialchars($_POST['uzjmeno']);
+    $heslo=md5($_POST['heslo']);
 
-//Udáje od databáze, do které se chceme připojit
-$servername="localhost";
-$username="root";
-$password="";
-$dbname="WEB_SP";
-$conn = new mysqli($servername, $username, $password, $dbname);
-//Zajištění že se budou data ukládat i v češtině
-$conn->query('set character_set_client=utf8');
-$conn->query('set character_set_connection=utf8');
-$conn->query('set character_set_results=utf8');
-$conn->query('set character_set_server=utf8');
-//Chyba pokud není spojení s databází
-if ($conn->connect_error) {
-    die("Chyba: " . $conn->connect_error);
-}
-//Vložení dat do databáze
-$sql = "INSERT INTO `autori` (jmeno, prijmeni, email, uzjmeno, heslo)
+    //Udáje od databáze, do které se chceme připojit
+    $servername="localhost";
+    $username="root";
+    $password="";
+    $dbname="WEB_SP";
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    //Zajištění že se budou data ukládat i v češtině
+    $conn->query('set character_set_client=utf8');
+    $conn->query('set character_set_connection=utf8');
+    $conn->query('set character_set_results=utf8');
+    $conn->query('set character_set_server=utf8');
+    //Chyba pokud není spojení s databází
+    if ($conn->connect_error) {
+        die("Chyba: " . $conn->connect_error);
+    }
+    //Vložení dat do databáze
+    $sql = "INSERT INTO `autori` (jmeno, prijmeni, email, uzjmeno, heslo)
 VALUES ('$jmeno', '$prijmeni', '$email', '$uzjmeno', '$heslo')";
-if ($conn->query($sql) === TRUE) {
-    echo "Uživatel uložen.";
-} else {
-    echo "Chyba: " . $sql . "<br>" . $conn->error;
+    if ($conn->query($sql) === TRUE) {
+        echo "Uživatel uložen.";
+    } else {
+        echo "Chyba: " . $sql . "<br>" . $conn->error;
 
-$conn->close();}
-?>
+        $conn->close();}
+    ?>
 </div>
-    </body>
+</body>
 </html>
