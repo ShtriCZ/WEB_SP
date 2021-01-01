@@ -31,7 +31,7 @@ else{
     <div class="aaa">
         <table cellspacing="5" border="0" cellpadding="0">
             <td style=" padding: 5px;"><a href="recenzenti_menu.php" class="text-success">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_recenzenti.php" class="text-success">KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_k_recenzi.php" class="text-success">KONFERENCE K RECENZI</a></td>
             <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="ohodnotit.php" class="text-success">OHODNOTIT KONFERENCI</a></td>
         </table>
@@ -68,7 +68,7 @@ else{
         echo "<br><table  cellspacing='5' border='2'>";
         if ($result->num_rows > 0) {
         //Výpis horní řady tabulky
-        echo("<tr><td>Název:</td><td>Autor:</td><td>Abstrakt:</td><td>Stav:</td><td>PDF:</td><td>Přidal:</td></tr>");
+        echo("<tr><td width='1%'>Název:</td><td width='1%'>Autor:</td><td width='1%'>Stav:</td><td width='1%'>PDF:</td><td width='1%'>Přidal:</td></tr>");
         while($dat = $result->fetch_assoc()) {
         $id=$dat["id"];
         //Výpis konferencí, které má přihlášený recenzent k recenzi
@@ -76,21 +76,14 @@ else{
                 $jmena = explode(",",$data["recenzent"]);
                 for($i =0;$i<count($jmena);$i++){
                     if($jmena[$i]==$id){
-                echo  "<tr><td width='1%'>".$data["nazev"]."</td><td width='1%'>".$data["autor"]."</td><td width='1%''><button>Ukázat</button></td>
-                <td width='1%'>".$data["stav"]."</td><td width='1%'><p class='text-success'><a  style='text-decoration: none;color:#007901;' href='pdf/".$data["pdf"]."'>".$data["pdf"]."</a></p></td><td width='1%'>".$data["pridal"]."</td></tr>";
-                        echo  "<tr><div id='text' style='display:none'><textarea readonly name='text' style='width: 500px; height: 250px; resize: none' class='ckeditor' id='editor'>".$data["text"] ."</textarea></div></tr>";
-            }}}} }  }
+                echo  "<table  cellspacing='5' border='2'><tr><td width='1%'>".$data["nazev"]."</td><td width='1%'>".$data["autor"]."</td>
+                <td width='1%'>".$data["stav"]."</td><td width='1%'><p class='text-success'><a  style='text-decoration: none;color:#007901;' href='pdf/".$data["pdf"]."' target='blank'>".$data["pdf"]."</a></p></td><td width='1%'>".$data["pridal"]."</td></tr>";
+                        echo  "<table><tr><div id='text'><textarea readonly name='text' class='ckeditor' id='".$data["id"]."'>".$data["text"] ."</textarea></div></tr></table>";
+                        echo "</table>";
+                    }}}} }  }
         echo "</table>";
         ?>
     </div>
-<!--Script pro zobrazení a skrytí abstraktu-->
-    <script>
-        $(document).ready(function(){
-            $("button").click(function(){
-                $("#text").toggle();
-            });
-        });
-    </script>
 <!--Script pro obarvení řádků v tabulce-->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script>
