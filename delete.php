@@ -4,7 +4,7 @@
     include_once("connect.php");
     $id=$_POST["id"];
 
-    //Udáje od databáze, do které se chceme připojits
+    //Udáje od databáze, do které se chceme připojit
     $servername="localhost";
     $username="root";
     $password="";
