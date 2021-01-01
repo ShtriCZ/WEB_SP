@@ -28,50 +28,50 @@ else{
 <center>
     <div class="aaa">
         <table cellspacing="5" border="0" cellpadding="0">
-                    <td style=" padding: 5px;"><a href="admin_menu.php" class="text-success">O STRÁNKÁCH</a></td>
-                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
-                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php" class="text-success">SPRÁVA KONFERENCÍ</a></td>
-                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php" class="text-success">UŽIVATELÉ</a></td>
-                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php" class="text-success">ZVEŘEJNIT KONFERENCI</a></td>
+            <td style=" padding: 5px;"><a href="admin_menu.php" class="text-success">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php" class="text-success">SPRÁVA KONFERENCÍ</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php" class="text-success">UŽIVATELÉ</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php" class="text-success">ZVEŘEJNIT KONFERENCI</a></td>
         </table>
     </div>
 </center>
-    <br>
-    <div class="login">
-        <?php
-        //Udáje od databáze, do které se chceme připojit
-        $servername="localhost";
-        $username="root";
-        $password="";
-        $dbname="web_sp";
-        $conn=mysqli_connect($servername,$username,$password,$dbname);
-        //Zajištění že se budou data načítat i v češtině
-        $conn->query('set character_set_client=utf8');
-        $conn->query('set character_set_connection=utf8');
-        $conn->query('set character_set_results=utf8');
-        $conn->query('set character_set_server=utf8');
-        if ($conn->connect_error) {
-            die("Chyba: " . $conn->connect_error);
-        }
+<br>
+<div class="login">
+    <?php
+    //Udáje od databáze, do které se chceme připojit
+    $servername="localhost";
+    $username="root";
+    $password="";
+    $dbname="web_sp";
+    $conn=mysqli_connect($servername,$username,$password,$dbname);
+    //Zajištění že se budou data načítat i v češtině
+    $conn->query('set character_set_client=utf8');
+    $conn->query('set character_set_connection=utf8');
+    $conn->query('set character_set_results=utf8');
+    $conn->query('set character_set_server=utf8');
+    if ($conn->connect_error) {
+        die("Chyba: " . $conn->connect_error);
+    }
 
-        //Výběr ohodnocených konferencí z databáze
-        $prikaz = "SELECT nazev FROM konference WHERE stav LIKE 'ohodnoceno'";
-        $resul = $conn->query($prikaz);
-        echo "<br><table  cellspacing='10' border='1' style='text-align: center'>";
-        if ($resul->num_rows > 0) {
-            //Výpis dat
-            while($data = $resul->fetch_assoc()) {
-                echo  "<tr><td width='1%'>".$data["nazev"]."</td><td width='1%'><form method='post' action='schvalit.php'><button type='submit' class='btn btn-success' name='nazev' value='".$data["nazev"]."' >Schválit</button></form>  </td>
+    //Výběr ohodnocených konferencí z databáze
+    $prikaz = "SELECT nazev FROM konference WHERE stav LIKE 'ohodnoceno'";
+    $resul = $conn->query($prikaz);
+    echo "<br><table  cellspacing='10' border='1' style='text-align: center'>";
+    if ($resul->num_rows > 0) {
+        //Výpis dat
+        while($data = $resul->fetch_assoc()) {
+            echo  "<tr><td width='1%'>".$data["nazev"]."</td><td width='1%'><form method='post' action='schvalit.php'><button type='submit' class='btn btn-success' name='nazev' value='".$data["nazev"]."' >Schválit</button></form>  </td>
                         <td width='1%'><form action='neschvalit.php' method='post'><button type='submit' name='nazev' class='btn btn-danger' value='".$data["nazev"]."' >Neschválit</button></form> </td></tr>";
-}}
-        echo "</table>";
-        ?>
-    </div>
-    <!--Skript pro obarvení lichých řádků-->
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script>
-        $("tr:odd").addClass("barva").css("background-color","#151515");
-    </script>
+        }}
+    echo "</table>";
+    ?>
+</div>
+<!--Skript pro obarvení lichých řádků-->
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    $("tr:odd").addClass("barva").css("background-color","#151515");
+</script>
 
 
 </body>
