@@ -19,7 +19,7 @@ if(isset($_SESSION['jmeno'])){
 </div>';}
 else{
     echo '<div class="prihlaseni">
-    <a href="prihlaseni.php" style="text-decoration: none;color:#007901;">Přihlásit se</a><br>
+    <p class="text-success"><a href="prihlaseni.php" style="text-decoration: none;color:#007901;">Přihlásit se</a></p> <br>
 </div>';
 }
 ?>
@@ -30,20 +30,64 @@ else{
 <center>
     <div class="aaa">
         <table cellspacing="5" border="0" cellpadding="0">
-            <td></td>
             <?php
-            //kontrola zda je někdo přihlášen
+            //Odkazy v hlaním menu se mění podle přihlášeného uživatele, pokud je nějaký přihlášený
             if(isset($_SESSION['jmeno'])){
+                $jmeno=$_SESSION['jmeno'];
                 if($_SESSION['jmeno']=="admin"){
                     echo('<td style=" padding: 5px;"><a href="admin_menu.php" class="text-success">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td><td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php" class="text-success">SPRÁVA KONFERENCÍ</a></td>');
-                    echo('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php" class="text-success">UŽIVATELÉ</a></td>');
-                    echo ('<td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php" class="text-success">ZVEŘEJNIT KONFERENCI</a></td>');
-                }}
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="sprava_konference.php" class="text-success">SPRÁVA KONFERENCÍ</a></td>
+                        <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="uzivatele.php" class="text-success">UŽIVATELÉ</a></td>
+                    <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="zverejnit_konferenci.php" class="text-success">ZVEŘEJNIT KONFERENCI</a></td>');
+                }
+
+                //Udáje od databáze, do které se chceme připojit
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "web_sp";
+                $conn = mysqli_connect($servername, $username, $password, $dbname);
+                //Zajištění že se budou data načítat i v češtině
+                $conn->query('set character_set_client=utf8');
+                $conn->query('set character_set_connection=utf8');
+                $conn->query('set character_set_results=utf8');
+                $conn->query('set character_set_server=utf8');
+                if ($conn->connect_error) {
+                    die("Chyba: " . $conn->connect_error);
+                }
+                //Výběr dat z databáze autorů podle jména
+                $prikaz = "SELECT * FROM autori WHERE uzjmeno='$jmeno'";
+                $resul = $conn->query($prikaz);
+
+                if ($resul->num_rows > 0) {
+                    //Ukáže dané odkazy
+                    while ($data = $resul->fetch_assoc()) {
+                        echo ' <td style=" padding: 5px;"><a href="autori_menu.php" class="text-success">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="moje_konference.php" class="text-success">MOJE KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="pridat_konferenci.php" class="text-success">PŘIDAT KONFERENCI</a></td>';
+                    }
+                }
+                //Výběr dat z recenzentů
+                $prikaz = "SELECT * FROM recenzenti WHERE uzjmeno='$jmeno'";
+                $resul = $conn->query($prikaz);
+
+                if ($resul->num_rows > 0) {
+                    //Ukáže dané odkazy
+                    while ($data = $resul->fetch_assoc()) {
+                        echo ' <td style=" padding: 5px;"><a href="recenzenti_menu.php" class="text-success">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference_k_recenzi.php" class="text-success">KONFERENCE K RECENZI</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="ohodnotit.php" class="text-success">OHODNOTIT KONFERENCI</a></td>';
+                    }
+                }
+
+            }
+            //Pokud není uživatel přihlášen
             else{
-                echo '
-            <td style=" padding: 5px;"><a href="autori_menu.php" class="text-success">O STRÁNKÁCH</a></td>
-            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>';
+                echo('<td style=" padding: 5px;"><a href="about.php" class="text-success">O STRÁNKÁCH</a></td>
+            <td style="border-left: 1px solid darkgray; padding: 5px;"><a href="konference.php" class="text-success">KONFERENCE</a></td>');
             }
             ?>
         </table>
